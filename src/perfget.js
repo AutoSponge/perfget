@@ -1,5 +1,7 @@
 (function ( GLOBAL ) {
+
     "use strict";
+
     var depthCache = {},
         cache = {},
         perfget = {};

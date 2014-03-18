@@ -9,7 +9,7 @@
     "path"
   ],
   "homepage": "https://github.com/AutoSponge/perfget",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/AutoSponge/perfget"
@@ -18,7 +18,12 @@
     "url": "https://github.com/AutoSponge/perfget/issues",
     "email": "pgrenier@gmail.com"
   },
-  "licenses": [{"type": "MIT", "url": "https://github.com/AutoSponge/perfget/blob/master/LICENSE"}],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/AutoSponge/perfget/blob/master/LICENSE"
+    }
+  ],
   "author": "Paul Grenier <pgrenier@gmail.com> (http://autosponge.github.io/)",
   "files": [
     "src",
@@ -37,22 +42,13 @@
     "gulp-uglify": "~0.2.1",
     "gulp-rename": "~1.0.0",
     "gulp-clean": "~0.2.4",
-    "gulp-mocha": "~0.4.1",
-    "gulp-notify": "~0.4.3",
-    "gulp-jshint": "~1.4.0"
+    "gulp-jshint": "~1.4.0",
+    "gulp-nodeunit": "0.0.5"
   },
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "gulp-clean": "~0.2.4",
-    "gulp": "~3.5.2",
-    "gulp-mocha": "~0.4.1",
-    "gulp-jshint": "~1.4.0",
-    "gulp-uglify": "~0.2.1",
-    "gulp-notify": "~0.4.3",
-    "gulp-rename": "~1.0.0"
-  },
+  "dependencies": {},
   "scripts": {
     "test": "gulp test"
   }

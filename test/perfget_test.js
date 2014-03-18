@@ -1,4 +1,3 @@
-var assert = require( "assert" );
 var perfget = require( "../dist/perfget.min" ),
     get = perfget.get,
     _get = perfget._get,
@@ -30,15 +29,15 @@ var obj = (function ( start, end ) {
 var tests = {};
 var testDefinitions = [
     //type      message                                     path                            receiver    equals
-    ["equals",  "should get obj from obj",                  null,                           obj,        obj],
-    ["equals",  "should get obj from obj",                  ,                               obj,        obj],
+    ["equals",  "should get obj from obj.null",             null,                           obj,        obj],
+    ["equals",  "should get obj from obj.",                 ,                               obj,        obj],
     ["equals",  "should get obj from obj at depth 0",       paths[0],                       obj,        obj],
     ["equals",  "should get a from obj at depth 1",         paths[1],                       obj,        obj.a],
     ["equals",  "should get z from obj at depth 26",        paths[26],                      obj,        obj.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w.x.y.z],
     ["equals",  "should not get x from a at depth 2",       paths[1] + ".x",                obj         ],
     ["equals",  "should not get x from a at depth 3",       paths[1] + ".x.x",              obj         ],
     ["instance","should return an array c from b",          paths[3],                       obj,        Array],
-    ["equals",  "should return length 0 from array c",      paths[3] + ".length",           obj,        0],
+    ["equals",  "should return length 0 from path c",       paths[3] + ".length",           obj,        0],
     ["equals",  "should return length 0 from array c",      ["a", "b", "c", "length"],      obj,        0],
     ["type",    "should return a function f from e",        paths[6],                       obj,        "function"],
     ["type",    "should return a function apply from f",    paths[6] + ".apply",            obj,        "function"],
@@ -47,39 +46,39 @@ var testDefinitions = [
     "ignore"
 ];
 
-describe( "perfget", function () {
-    describe( "#get(), #_get(), #get_()", function() {
-        var test;
-        var i = testDefinitions.length;
-        var createTestFn = {
-            equals: function ( type, message, path, receiver, result ) {
-                it( message, function () {
-                    assert.equal( get.call( receiver, path ), result, message );
-                    assert.equal( _get( receiver )( path ), result, message );
-                    assert.equal( get_( path )( receiver ), result, message );
-                } );
-            },
-            instance: function ( type, message, path, receiver, result ) {
-                it( message, function () {
-                    assert.ok( get.call( receiver, path ) instanceof result, message );
-                    assert.ok( _get( receiver )( path ) instanceof result, message );
-                    assert.ok( get_( path )( receiver ) instanceof result, message );
-                } );
-            },
-            type: function ( type, message, path, receiver, result ) {
-                it( message, function () {
-                    assert.equal( typeof get.call( receiver, path ), result, message );
-                    assert.equal( typeof _get( receiver )( path ), result, message );
-                    assert.equal( typeof get_( path )( receiver ), result, message );
-                } );
-            }
+var group = exports["Object Traversal"] = {};
+var test;
+var i = testDefinitions.length;
+var createTestFn = {
+    equals: function ( type, message, path, receiver, result ) {
+        return function ( test ) {
+            test.equals( get.call( receiver, path ), result, message );
+            test.equals( _get( receiver )( path ), result, message );
+            test.equals( get_( path )( receiver ), result, message );
+            test.done();
         };
+    },
+    instance: function ( type, message, path, receiver, result ) {
+        return function ( test ) {
+            test.ok( get.call( receiver, path ) instanceof result, message );
+            test.ok( _get( receiver )( path ) instanceof result, message );
+            test.ok( get_( path )( receiver ) instanceof result, message );
+            test.done();
+        };
+    },
+    type: function ( type, message, path, receiver, result ) {
+        return function ( test ) {
+            test.equals( typeof get.call( receiver, path ), result, message );
+            test.equals( typeof _get( receiver )( path ), result, message );
+            test.equals( typeof get_( path )( receiver ), result, message );
+            test.done();
+        };
+    }
+};
 
-        while ( i-- ) {
-            test = testDefinitions[i];
-            if ( test !== "ignore" ) {
-                tests["test" + i] = createTestFn[test[0]].apply( null, test );
-            }
-        }
-    } );
-} );
+while ( i-- ) {
+    test = testDefinitions[i];
+    if ( test !== "ignore" ) {
+        group["test - " + test[1]] = createTestFn[test[0]].apply( null, test );
+    }
+}

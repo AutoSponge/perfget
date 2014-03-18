@@ -1,3 +1,5 @@
+[![NPM version][npm-image]][npm-url]
+
 perfget
 =======
 
@@ -186,3 +188,7 @@ var pluckId = get_( "deeply.nested.id" );
 var obj = {deeply:{nested:{id:1}}}
 [obj].map( pluckId ); // [1]
 ```
+
+## Change log
+
+- 2014-03-18: (v0.1.1) Replaced gulp-mocha with gulp-nodeunit, added travis-ci integration
