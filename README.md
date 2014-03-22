@@ -22,7 +22,7 @@ in the browser: `get( "document.body.childNodes.length" );`
 
 ##Updates
 
-v0.2.1 - perfget now uses a constructor function to instantiate the `perfget` object.
+v0.2.0 - perfget now uses a constructor function to instantiate the `perfget` object.
 This means you can inherit the `.get()` method into your own constructors using
 node's `util.inherits`.  This provides fast, null-safe accessor methods on your
 custom objects.  See the tests for an example.
