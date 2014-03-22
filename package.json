@@ -43,7 +43,8 @@
     "gulp-rename": "~1.0.0",
     "gulp-clean": "~0.2.4",
     "gulp-jshint": "~1.4.0",
-    "gulp-nodeunit": "0.0.5"
+    "gulp-nodeunit": "0.0.5",
+    "jshint-stylish": "~0.1.5"
   },
   "directories": {
     "test": "test"

@@ -20,6 +20,18 @@ this around to other functions.
 Any properties you can normally access, `get` can return.  For instance, this will work
 in the browser: `get( "document.body.childNodes.length" );`
 
+##Updates
+
+v0.2.1 - perfget now uses a constructor function to instantiate the `perfget` object.
+This means you can inherit the `.get()` method into your own constructors using
+node's `util.inherits`.  This provides fast, null-safe accessor methods on your
+custom objects.  See the tests for an example.
+
+perfget no longer caches the string path as a key to the split array.  While this extra
+step will slow overall speed, I felt the caching may have been too aggressive for larger
+applications.  If you want that performance back, split the string yourself and
+cache the array or wrap get with your own caching function.
+
 ## Notes
 
 No, this does not use `try/catch`.  That tends to slow things down, especially in the

@@ -1,40 +1,44 @@
 (function ( GLOBAL ) {
 
-    "use strict";
+    'use strict';
 
-    var depthCache = {},
-        cache = {},
-        perfget = {};
+    function Perfget() {}
 
-    function getDepth( depth ) {
-        var params = "",
-            vars = "  var _0 = this",
-            body = false,
-            h, i;
+    Perfget.prototype.get = (function () {
+        var depthCache = {};
 
-        if ( !depthCache[depth] ) {
-            for ( i = 0; i < depth; i += 1 ) {
-                params += i ? (", $" + i) : "$" + i;
-                vars += i ? (", _" + i) : "";
-            }
-            vars += ";\n";
-            for ( h = i - 1; i > 0; i -= 1, h -= 1 ) {
-                if ( !body ) {
-                    body = "_" + h + " === Object(_" + h + ") && ($" + h + " in _" + h + ") ? _" + h + "[$" + h + "]";
-                } else {
-                    body = "(_" + i + " = _" + h + "[$" + h + "], _" + i + ") && " + body;
+        function getDepth( depth ) {
+            var params = '',
+                vars = '  var _0 = this',
+                body = false,
+                h, i;
+
+            if ( !depthCache[depth] ) {
+                for ( i = 0; i < depth; i += 1 ) {
+                    params += i ? (', $' + i) : '$' + i;
+                    vars += i ? (', _' + i) : '';
                 }
+                vars += ';\n';
+                for ( h = i - 1; i > 0; i -= 1, h -= 1 ) {
+                    if ( !body ) {
+                        body = '_' + h + ' === Object(_' + h + ') && ($' + h + ' in _' + h + ') ? _' + h + '[$' + h + ']';
+                    } else {
+                        body = '(_' + i + ' = _' + h + '[$' + h + '], _' + i + ') && ' + body;
+                    }
+                }
+                body = '  return ' + (!body ? '_0;' : body + ' : void(0);');
+                depthCache[depth] = Function( params, vars + body );  // jshint ignore:line
             }
-            body = "  return " + (!body ? "_0;" : body + " : void(0);");
-            depthCache[depth] = Function( params, vars + body );  // jshint ignore:line
+            return depthCache[depth];
         }
-        return depthCache[depth];
-    }
 
-    perfget.get = function get( path ) {
-        var params = path ? path.split ? cache[path] || (cache[path] = path.split( "." ), cache[path]) : path : [];
-        return getDepth( params.length ).apply( this, params );
-    };
+        return function ( path ) {
+            var params = path ? path.split ? path.split( '.' ) : path : [];
+            return getDepth( params.length ).apply( this, params );
+        };
+    }());
+
+    var perfget = new Perfget();
 
     perfget._get = function _get( reciever ) {
         return function ( path ) {
@@ -48,7 +52,7 @@
         };
     };
 
-    if ( typeof module === "undefined" ) {
+    if ( typeof module === 'undefined' ) {
 
         GLOBAL.get = perfget.get;
         GLOBAL._get = perfget._get;
