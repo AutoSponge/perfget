@@ -60,7 +60,7 @@ get( "process.title" ); //'node'
 Use `get()` for your custom objects
 
 ```html
-<!-- Browser example -->
+<!-- Browser method example -->
 <script src="perfget.min.js">
 <script>
 function Klass( thangs ) {
@@ -76,7 +76,7 @@ k.get( "stuff.thangs.1" ); //2
 ```
 
 ```html
-<!-- Browser example -->
+<!-- Browser Object.create example -->
 <script src="perfget.min.js">
 <script>
 var obj = Object.create( perfget() );
@@ -89,7 +89,7 @@ obj.get( "stuff.thangs.1" ); //2
 ```
 
 ```javascript
-// NodeJS example
+// NodeJS method example
 var perfget = require( "perfget" );
 function Klass( thangs ) {
   this.stuff = {
@@ -103,7 +103,7 @@ k.get( "stuff.thangs.1" ); //2
 ```
 
 ```javascript
-// NodeJS example
+// NodeJS util.inherits example
 var perfget = require( "perfget" );
 var util = require( "util" );
 function Klass( thangs ) {
@@ -118,7 +118,7 @@ k.get( "stuff.thangs.1" ); //2
 ```
 
 ```javascript
-// NodeJS example
+// NodeJS Object.create example
 var perfget = require( "perfget" );
 var obj = Object.create( perfget.factory() );
 obj.stuff = {
