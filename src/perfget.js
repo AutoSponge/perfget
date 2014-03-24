@@ -52,11 +52,16 @@
         };
     };
 
+    perfget.factory = function () {
+        return new Perfget();
+    };
+
     if ( typeof module === 'undefined' ) {
 
         GLOBAL.get = perfget.get;
         GLOBAL._get = perfget._get;
         GLOBAL.get_ = perfget.get_;
+        GLOBAL.perfget = perfget.factory;
 
     } else {
 

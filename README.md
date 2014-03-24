@@ -20,18 +20,6 @@ this around to other functions.
 Any properties you can normally access, `get` can return.  For instance, this will work
 in the browser: `get( "document.body.childNodes.length" );`
 
-##Updates
-
-v0.2.0 - perfget now uses a constructor function to instantiate the `perfget` object.
-This means you can inherit the `.get()` method into your own constructors using
-node's `util.inherits`.  This provides fast, null-safe accessor methods on your
-custom objects.  See the tests for an example.
-
-perfget no longer caches the string path as a key to the split array.  While this extra
-step will slow overall speed, I felt the caching may have been too aggressive for larger
-applications.  If you want that performance back, split the string yourself and
-cache the array or wrap get with your own caching function.
-
 ## Notes
 
 No, this does not use `try/catch`.  That tends to slow things down, especially in the
@@ -87,6 +75,19 @@ k.get( "stuff.thangs.1" ); //2
 </script>
 ```
 
+```html
+<!-- Browser example -->
+<script src="perfget.min.js">
+<script>
+var obj = Object.create( perfget() );
+
+obj.stuff = {
+  thangs: [1,2,3]
+};
+obj.get( "stuff.thangs.1" ); //2
+</script>
+```
+
 ```javascript
 // NodeJS example
 var perfget = require( "perfget" );
@@ -99,6 +100,32 @@ Klass.prototype.get = perfget.get;
 
 var k = new Klass( [1,2,3] );
 k.get( "stuff.thangs.1" ); //2
+```
+
+```javascript
+// NodeJS example
+var perfget = require( "perfget" );
+var util = require( "util" );
+function Klass( thangs ) {
+  this.stuff = {
+    thangs: thangs
+  };
+}
+util.inherits( Klass, perfget.constructor );
+
+var k = new Klass( [1,2,3] );
+k.get( "stuff.thangs.1" ); //2
+```
+
+```javascript
+// NodeJS example
+var perfget = require( "perfget" );
+var obj = Object.create( perfget.factory() );
+obj.stuff = {
+  thangs: [1,2,3]
+};
+
+obj.get( "stuff.thangs.1" ); //2
 ```
 
 Use `_get()` to wrap objects
@@ -204,4 +231,16 @@ var obj = {deeply:{nested:{id:1}}}
 
 ## Change log
 
-- 2014-03-18: (v0.1.1) Replaced gulp-mocha with gulp-nodeunit, added travis-ci integration
+Date       | Version  | Notes
+--- | --- | ---
+2014-03-24 | (v0.2.1) | Added better support for Object.create
+2014-03-22 | (v0.2.0) | perfget now uses a constructor function to instantiate the `perfget` object.
+This means you can inherit the `.get()` method into your own constructors using
+node's `util.inherits`.  This provides fast, null-safe accessor methods on your
+custom objects.  See the tests for an example.
+
+perfget no longer caches the string path as a key to the split array.  While this extra
+step will slow overall speed, I felt the caching may have been too aggressive for larger
+applications.  If you want that performance back, split the string yourself and
+cache the array or wrap get with your own caching function.
+2014-03-18 | (v0.1.1) | Replaced gulp-mocha with gulp-nodeunit, added travis-ci integration

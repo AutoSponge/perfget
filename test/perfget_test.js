@@ -3,7 +3,6 @@ var perfget = require( '../dist/perfget.min' ),
     _get = perfget._get,
     get_ = perfget.get_;
 
-
 /**
  * create test object and associated paths
  * object has depth 26 (a-z properties)
@@ -52,25 +51,34 @@ var i = testDefinitions.length;
 var createTestFn = {
     equals: function ( type, message, path, receiver, result ) {
         return function ( test ) {
+            test.expect( 3 );
+
             test.equals( get.call( receiver, path ), result, message );
             test.equals( _get( receiver )( path ), result, message );
             test.equals( get_( path )( receiver ), result, message );
+
             test.done();
         };
     },
     instance: function ( type, message, path, receiver, result ) {
         return function ( test ) {
+            test.expect( 3 );
+
             test.ok( get.call( receiver, path ) instanceof result, message );
             test.ok( _get( receiver )( path ) instanceof result, message );
             test.ok( get_( path )( receiver ) instanceof result, message );
+
             test.done();
         };
     },
     type: function ( type, message, path, receiver, result ) {
         return function ( test ) {
+            test.expect( 3 );
+
             test.equals( typeof get.call( receiver, path ), result, message );
             test.equals( typeof _get( receiver )( path ), result, message );
             test.equals( typeof get_( path )( receiver ), result, message );
+
             test.done();
         };
     }
@@ -83,16 +91,16 @@ while ( i-- ) {
     }
 }
 
-var group2 = exports['Inheritance Pattern'] = {};
+var group2 = exports['util.inherits Inheritance Pattern'] = {};
 
-group2['constructor provides get'] = function ( test ) {
+group2['inheritance only provides get'] = function ( test ) {
 
     var inherits = require( 'util' ).inherits;
 
     function MyConstructor() {
         this.a = {
             b: {
-                c: [1,2,3]
+                c: [1, 2, 3]
             }
         };
     }
@@ -101,9 +109,74 @@ group2['constructor provides get'] = function ( test ) {
 
     var myconstructor = new MyConstructor();
 
+    test.expect( 3 );
+
+    test.ok( typeof myconstructor.get === 'function' );
+    test.ok( typeof myconstructor._get === 'undefined' );
+    test.ok( typeof myconstructor.get_ === 'undefined' );
+
+    test.done();
+
+};
+
+group2['get works in the context of the new object'] = function ( test ) {
+
+    var inherits = require( 'util' ).inherits;
+
+    function MyConstructor() {
+        this.a = {
+            b: {
+                c: [1, 2, 3]
+            }
+        };
+    }
+
+    inherits( MyConstructor, perfget.constructor );
+
+    var myconstructor = new MyConstructor();
+
+    test.expect( 3 );
+
     test.equals( myconstructor.get, perfget.get );
-    test.equals( myconstructor.get('a.b.c'), myconstructor.a.b.c );
-    test.notEqual( myconstructor.get('a.b.c'), perfget.get.call( {a:{b:{c:[1,2,3]}}}, 'a.b.c' ) );
+    test.equals( myconstructor.get( 'a.b.c' ), myconstructor.a.b.c );
+    test.notEqual( myconstructor.get( 'a.b.c' ), perfget.get.call( obj, 'a.b.c' ) );
+
+    test.done();
+
+};
+
+var group3 = exports['Object.create Inheritance Pattern'] = {};
+// Don't use Object.create( perfget ) as this will include _get and get_ which you should
+// use functionally and not use in the context of an object.
+group3['inheritance only provides get'] = function ( test ) {
+
+    var prototypal = Object.create( perfget.factory() );
+
+    test.expect( 3 );
+
+    test.ok( typeof prototypal.get === 'function' );
+    test.ok( typeof prototypal._get === 'undefined' );
+    test.ok( typeof prototypal.get_ === 'undefined' );
+
+    test.done();
+
+};
+
+group3['get works in the context of the new object'] = function ( test ) {
+
+    var prototypal = Object.create( perfget.factory() );
+
+    prototypal.a = {
+        b: {
+            c: [1, 2, 3]
+        }
+    };
+
+    test.expect( 3 );
+
+    test.equals( prototypal.get, perfget.get );
+    test.equals( prototypal.get( 'a.b.c' ), prototypal.a.b.c );
+    test.notEqual( prototypal.get( 'a.b.c' ), perfget.get.call( obj, 'a.b.c' ) );
 
     test.done();
 
