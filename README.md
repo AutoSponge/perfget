@@ -233,6 +233,6 @@ var obj = {deeply:{nested:{id:1}}}
 
 Date       | Version  | Notes
 --- | --- | ---
-2014-03-24 | (v0.2.1) | Added better support for Object.create
-2014-03-22 | (v0.2.0) | perfget now uses a constructor function to instantiate the `perfget` object. This means you can inherit the `.get()` method into your own constructors using node's `util.inherits`. This provides fast, null-safe accessor methods on your custom objects.  See the tests for an example. perfget no longer caches the string path as a key to the split array.  While this extra step will slow overall speed, I felt the caching may have been too aggressive for larger applications.  If you want that performance back, split the string yourself and cache the array or wrap get with your own caching function.
-2014-03-18 | (v0.1.1) | Replaced gulp-mocha with gulp-nodeunit, added travis-ci integration
+2014-03-24 | 0.2.1 | Added better support for Object.create
+2014-03-22 | 0.2.0 | Added support for util.inherits
+2014-03-18 | 0.1.1 | Replaced gulp-mocha with gulp-nodeunit, added travis-ci integration
