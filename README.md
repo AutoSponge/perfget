@@ -233,6 +233,6 @@ var obj = {deeply:{nested:{id:1}}}
 
 Date       | Version  | Notes
 --- | --- | ---
-2014-03-24 | 0.2.1 | Added better support for Object.create
-2014-03-22 | 0.2.0 | Added support for util.inherits
-2014-03-18 | 0.1.1 | Replaced gulp-mocha with gulp-nodeunit, added travis-ci integration
+2014-03-24 | v0.2.1 | Added better support for Object.create
+2014-03-22 | v0.2.0 | Added support for util.inherits
+2014-03-18 | v0.1.1 | Replaced gulp-mocha with gulp-nodeunit, added travis-ci integration
