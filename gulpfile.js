@@ -1,9 +1,9 @@
 var gulp = require( 'gulp' ),
-    nodeunit = require( 'gulp-nodeunit' ),
     jshint = require( 'gulp-jshint' ),
     uglify = require( 'gulp-uglify' ),
     rename = require( 'gulp-rename' ),
-    clean = require( 'gulp-clean' );
+    clean = require( 'gulp-clean' ),
+    tape = require( 'tape' );
 
 gulp.task( 'compress', function () {
     return gulp.src( 'src/*.js' )
@@ -14,16 +14,9 @@ gulp.task( 'compress', function () {
         .pipe( gulp.dest( 'dist' ) );
 } );
 
-gulp.task( 'test', function () {
-    return gulp.src( 'test/*.js' )
-        .pipe( nodeunit( {} ) );
-} );
-
 gulp.task( 'clean', function () {
     return gulp.src( ['dist'], { read: false } )
         .pipe( clean() );
 } );
 
-gulp.task( 'default', ['clean', 'compress'], function () {
-    gulp.start( 'test' );
-} );
+gulp.task( 'default', ['clean', 'compress'], function () {} );
