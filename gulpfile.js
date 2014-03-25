@@ -19,4 +19,4 @@ gulp.task( 'clean', function () {
         .pipe( clean() );
 } );
 
-gulp.task( 'default', ['clean', 'compress'], function () {} );
+gulp.task( 'default', ['clean', 'compress'] );
