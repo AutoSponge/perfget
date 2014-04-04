@@ -25,9 +25,8 @@ in the browser: `get( "document.body.childNodes.length" );`
 ## Notes
 
 No, this does not use `try/catch`.  That tends to slow things down, especially in the
-browser.  For each "depth", **perfget** constructs a function capable of accessing
-properties at that depth.  The function gets cached for reuse.  Splitting long strings
-can also take time, so we cache those as well for reliable, fast results.
+browser.  For each "depth", **perfget** constructs a **null-safe** function capable of accessing
+properties at that depth.  The _depth_ function gets cached for reuse.
 
 ## Getting started
 
@@ -50,6 +49,7 @@ Use `get()` globally
 <script src="perfget.min.js">
 <script>
 get( "window.location.hash" );
+get( "window.washer" ); //undefined
 </script>
 ```
 
@@ -74,6 +74,7 @@ Klass.prototype.get = get;
 
 var k = new Klass( [1,2,3] );
 k.get( "stuff.thangs.1" ); //2
+k.get( "stuff.whatevs.mine" ); //undefined
 </script>
 ```
 
@@ -87,6 +88,7 @@ obj.stuff = {
   thangs: [1,2,3]
 };
 obj.get( "stuff.thangs.1" ); //2
+obj.get( "stuff.whatevs.mine" ); //undefined
 </script>
 ```
 
@@ -102,6 +104,7 @@ Klass.prototype.get = perfget.get;
 
 var k = new Klass( [1,2,3] );
 k.get( "stuff.thangs.1" ); //2
+k.get( "stuff.whatevs.mine" ); //undefined
 ```
 
 ```javascript
@@ -117,6 +120,7 @@ util.inherits( Klass, perfget.constructor );
 
 var k = new Klass( [1,2,3] );
 k.get( "stuff.thangs.1" ); //2
+k.get( "stuff.whatevs.mine" ); //undefined
 ```
 
 ```javascript
@@ -128,6 +132,7 @@ obj.stuff = {
 };
 
 obj.get( "stuff.thangs.1" ); //2
+obj.get( "stuff.whatevs.mine" ); //undefined
 ```
 
 Use `_get()` to wrap objects
