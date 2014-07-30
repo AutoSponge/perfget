@@ -34,6 +34,21 @@ Download and include `perfget.min.js` on a browser page or install via npm:
 
 `npm install perfget --save-dev`
 
+### Now available with bower
+
+1. add this line to your bower.json in the dependencies: `"perfget": "perfget#0.2.1b"`
+1. Next, add this line to your .html file(s) `<script src="bower_components/perfget/dist/perfget.min.js"></script>`
+1. You will have all three (`get`, `get_`, and `_get`) methods as globals as well as the `perfget` which is 
+an alias for `perfget.factory`.
+
+If you use this script for a web component, like Polymer, create an intermediary include like this:
+
+```html
+<!-- filename: components/perfget-include/perfget-include.html -->
+<script src="../perfget/dist/perfget.min.js"></script>
+```
+Then, import the new component: `<link rel="import" href="components/perfget-include/perfget-include.html">`
+
 ## API
 
 - `get( path:String|Array )` : Returns property values of `this`.
