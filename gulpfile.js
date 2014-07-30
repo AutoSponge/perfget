@@ -2,8 +2,7 @@ var gulp = require( 'gulp' ),
     jshint = require( 'gulp-jshint' ),
     uglify = require( 'gulp-uglify' ),
     rename = require( 'gulp-rename' ),
-    clean = require( 'gulp-clean' ),
-    tape = require( 'tape' );
+    clean = require( 'gulp-clean' );
 
 gulp.task( 'compress', function () {
     return gulp.src( 'src/*.js' )
