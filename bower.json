@@ -8,7 +8,9 @@
     "node_modules",
     "test",
     "gulpfile.js",
-    "package.json"
+    "package.json",
+    "bower_components",
+    "tests"
   ],
   "keywords": [
     "accessor",
@@ -16,5 +18,15 @@
     "getter",
     "json",
     "path"
+  ],
+  "homepage": "https://github.com/AutoSponge/perfget",
+  "authors": [
+    "AutoSponge <pgrenier@gmail.com>"
+  ],
+  "description": "Fastest method for returning deeply nested properties based on a string path.",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
   ]
 }
