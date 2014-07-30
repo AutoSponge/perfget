@@ -1,6 +1,8 @@
 {
   "name": "perfget",
   "version": "0.2.1",
+  "main": "dist/perfget.min.js",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -14,8 +16,5 @@
     "getter",
     "json",
     "path"
-  ],
-  "license": "MIT",
-  "main": "dist/perfget.min.js",
-  "dependencies": {}
+  ]
 }
