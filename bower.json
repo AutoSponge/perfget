@@ -16,6 +16,6 @@
     "path"
   ],
   "license": "MIT",
-  "main": "dist/perget.min.js",
+  "main": "dist/perfget.min.js",
   "dependencies": {}
 }
