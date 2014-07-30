@@ -2,7 +2,20 @@
   "name": "perfget",
   "version": "0.2.1",
   "ignore": [
-    "node_modules"
+    "**/.*",
+    "node_modules",
+    "test",
+    "gulpfile.js",
+    "package.json"
   ],
+  "keywords": [
+    "accessor",
+    "get",
+    "getter",
+    "json",
+    "path"
+  ],
+  "license": "MIT",
+  "main": "dist/perget.min.js",
   "dependencies": {}
 }
