@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/AutoSponge/perfget.png?branch=master)](https://travis-ci.org/AutoSponge/perfget)
 [![NPM version](https://badge.fury.io/js/perfget.png)](http://badge.fury.io/js/perfget)
+[![Code Climate](https://codeclimate.com/repos/54cc2ff96956801b330056d8/badges/a212ffff3dde41c5bd31/gpa.svg)](https://codeclimate.com/repos/54cc2ff96956801b330056d8/feed)
+[![Test Coverage](https://codeclimate.com/repos/54cc2ff96956801b330056d8/badges/a212ffff3dde41c5bd31/coverage.svg)](https://codeclimate.com/repos/54cc2ff96956801b330056d8/feed)
 
 [![browser support](https://ci.testling.com/AutoSponge/perfget.png)](https://ci.testling.com/AutoSponge/perfget)
 
