@@ -7,35 +7,22 @@
     Perfget.prototype.get = (function () {
         var depthCache = {};
 
-        function getDepth( depth ) {
-            var params = '',
-                vars = '  var _0 = this',
-                body = false,
-                h, i;
+        function _get(path) {
+            var pathParts = path.split ? (path || 'null').split('.') : path,
+                currentPart = pathParts.shift(),
+                result = 'return(this.' + currentPart;
 
-            if ( !depthCache[depth] ) {
-                for ( i = 0; i < depth; i += 1 ) {
-                    params += i ? (', $' + i) : '$' + i;
-                    vars += i ? (', _' + i) : '';
-                }
-                vars += ';\n';
-                for ( h = i - 1; i > 0; i -= 1, h -= 1 ) {
-                    if ( !body ) {
-                        body = '_' + h + ' === Object(_' + h + ') && ($' + h + ' in _' + h + ') ? _' + h + '[$' + h + ']';
-                    } else {
-                        body = '(_' + i + ' = _' + h + '[$' + h + '], _' + i + ') && ' + body;
-                    }
-                }
-                body = '  return ' + (!body ? '_0;' : body + ' : void(0);');
-                depthCache[depth] = Function( params, vars + body );  // jshint ignore:line
-            }
-            return depthCache[depth];
+            while (pathParts.length) {
+                currentPart += '[\'' + pathParts.shift() + '\']';
+                result += ' && ' + currentPart;
+            };
+
+            return (depthCache[path] = Function(result + ')'))();
         }
 
-        return function ( path ) {
-            var params = path ? path.split ? path.split( '.' ) : path : [];
-            return getDepth( params.length ).apply( this, params );
-        };
+        return function(path) {
+            return (depthCache[path] || _get)(path);
+        }
     }());
 
     var perfget = new Perfget();
