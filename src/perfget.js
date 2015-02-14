@@ -9,19 +9,18 @@
 
         function _get( path ) {
             var pathParts = path ? path.split ? path.split( '.' ) : path : [],
-                currentPart = pathParts.shift(),
-                result = 'return( this.' + currentPart;
+                currentPart = 'this[\'' + pathParts.shift() + '\']',
+                result = 'return ( ' + currentPart;
 
             while ( pathParts.length ) {
                 currentPart += '[\'' + pathParts.shift() + '\']';
                 result += ' && ' + currentPart;
             }
-
             return ( depthCache[path] = new Function( result + ' )' ) )();  // jshint ignore:line
         }
 
         return function( path ) {
-            return ( depthCache[path] || _get )( path );
+            return ( depthCache[path] || _get ).call( this, path );
         };
     }());
 
