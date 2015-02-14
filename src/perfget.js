@@ -16,7 +16,7 @@
                 currentPart += '[\'' + pathParts.shift() + '\']';
                 result += ' && ' + currentPart;
             }
-            return ( depthCache[path] = new Function( result + ' )' ) )();  // jshint ignore:line
+            return ( depthCache[path] = new Function( result + ' )' ) ).call( this );  // jshint ignore:line
         }
 
         return function( path ) {
