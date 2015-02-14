@@ -7,22 +7,22 @@
     Perfget.prototype.get = (function () {
         var depthCache = {};
 
-        function _get(path) {
-            var pathParts = path ? path.split ? path.split('.') : path : [],
+        function _get( path ) {
+            var pathParts = path ? path.split ? path.split( '.' ) : path : [],
                 currentPart = pathParts.shift(),
-                result = 'return(this.' + currentPart;
+                result = 'return( this.' + currentPart;
 
-            while (pathParts.length) {
+            while ( pathParts.length ) {
                 currentPart += '[\'' + pathParts.shift() + '\']';
                 result += ' && ' + currentPart;
-            };
+            }
 
-            return (depthCache[path] = Function(result + ')'))();
+            return ( depthCache[path] = new Function( result + ' )' ) )();  // jshint ignore:line
         }
 
-        return function(path) {
-            return (depthCache[path] || _get)(path);
-        }
+        return function( path ) {
+            return ( depthCache[path] || _get )( path );
+        };
     }());
 
     var perfget = new Perfget();
