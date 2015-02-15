@@ -9,14 +9,14 @@
 
         function _get( path ) {
             var pathParts = path ? path.split ? path.split( '.' ) : path : [],
-                currentPart = 'this[\'' + pathParts.shift() + '\']',
-                result = 'return ( ' + currentPart;
+                currentPart = '(_ = this[\'' + pathParts.shift() + '\'])',
+                result = 'var _ = this; return ' + currentPart;
 
             while ( pathParts.length ) {
-                currentPart += '[\'' + pathParts.shift() + '\']';
+                currentPart = '(_ = _[\'' + pathParts.shift() + '\'])';
                 result += ' && ' + currentPart;
             }
-            return ( depthCache[path] = new Function( result + ' )' ) ).call( this );  // jshint ignore:line
+            return ( depthCache[path] = new Function( result ) ).call( this );  // jshint ignore:line
         }
 
         return function( path ) {
