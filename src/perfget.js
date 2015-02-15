@@ -9,12 +9,10 @@
 
         function _get( path ) {
             var pathParts = path ? path.split ? path.split( '.' ) : path : [],
-                currentPart = '(_ = this[\'' + pathParts.shift() + '\'])',
-                result = 'var _ = this; return ' + currentPart;
+                result = 'var _ = this; return (_ = this[\'' + pathParts.shift() + '\'])';
 
             while ( pathParts.length ) {
-                currentPart = '(_ = _[\'' + pathParts.shift() + '\'])';
-                result += ' && ' + currentPart;
+                result += ' && (_ = _[\'' + pathParts.shift() + '\'])';
             }
             return ( depthCache[path] = new Function( result ) ).call( this );  // jshint ignore:line
         }
