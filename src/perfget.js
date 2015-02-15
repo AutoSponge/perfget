@@ -9,7 +9,7 @@
 
         function _get( path ) {
             var pathParts = path ? path.split ? path.split( '.' ) : path : [],
-                result = 'var _ = this; return (_ = this[\'' + pathParts.shift() + '\'])';
+                result = 'var _ = this; return _ ';
 
             while ( pathParts.length ) {
                 result += ' && (_ = _[\'' + pathParts.shift() + '\'])';
