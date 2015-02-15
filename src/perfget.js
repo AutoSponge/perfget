@@ -11,8 +11,8 @@
             var pathParts = path ? path.split ? path.split( '.' ) : path : [],
                 result = 'var _ = this; return _ ';
 
-            while ( pathParts.length ) {
-                result += ' && (_ = _[\'' + pathParts.shift() + '\'])';
+            for ( var n = 0, m = pathParts.length; n < m; n++ ) {
+                result += ' && (_ = _[\'' + pathParts[n] + '\'])';
             }
             return ( depthCache[path] = new Function( result ) ).call( this );  // jshint ignore:line
         }
